@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arithmetic Calculator</title>
+    <style>
+        body {
+            background-color: lightgrey;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator-card {
+            background-color: lightblue;
+            width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 15px 35px grey;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: 0;
+            color: black;
+            font-size:30px;
+            border-bottom: 2px solid whitesmoke;
+            padding-bottom: 15px;
+        }
+
+        .input-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        input {
+            width: 42%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid brown;
+            border-radius: 8px;
+            outline: none;
+            background-color: ghostwhite;
+        }
+
+        /* --- FLEXBOX REPLACEMENT FOR GRID --- */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows buttons to wrap to the next line */
+            justify-content: center; /* Centers buttons horizontally */
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            /* Setting a width allows us to control how many fit per row */
+            width: 30%; 
+            padding: 15px 0;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: whitesmoke;
+            box-shadow: 0px 2px 5px lightgrey;
+        }
+
+        button:hover {
+            background-color: gainsboro;
+        }
+
+        .op-btn {
+            background-color: orange;
+            color: white;
+        }
+
+        .result-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: whitesmoke;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        #result-text {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: seagreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-card">
+        <h2>Arithmetic Calculator</h2>
+
+        <div class="input-section">
+            <input type="number" id="numA" placeholder="Value a">
+            <input type="number" id="numB" placeholder="Value b">
+        </div>
+
+        <div class="button-container">
+            <button class="op-btn" onclick="runCalc('add')">Add</button>
+            <button class="op-btn" onclick="runCalc('sub')">Sub</button>
+            <button class="op-btn" onclick="runCalc('mult')">Multiply</button>
+            <button class="op-btn" onclick="runCalc('div')">Divide</button>
+            <button class="op-btn" onclick="runCalc('sqrt')">SquareRoot</button>
+            <button class="op-btn" onclick="runCalc('round')">Round</button>
+        </div>
+
+        <div class="result-container">
+            <p id="result-text">Result: ---</p>
+        </div>
+    </div>
+
+    <script>
+        function runCalc(action) {
+            const a = parseFloat(document.getElementById('numA').value);
+            const b = parseFloat(document.getElementById('numB').value);
+            const output = document.getElementById('result-text');
+            let finalValue = 0;
+
+            if (isNaN(a)) {
+                output.innerText = "Error: Input A empty";
+                return;
+            }
+
+            switch(action) {
+                case 'add': finalValue = a + b; break;
+                case 'sub': finalValue = a - b; break;
+                case 'mult': finalValue = a * b; break;
+                case 'div': finalValue = b !== 0 ? (a / b).toFixed(2) : "Infinity"; break;
+                case 'sqrt': finalValue = Math.sqrt(a).toFixed(2); break;
+                case 'round': finalValue = Math.round(a); break;
+            }
+
+            output.innerText = "Result: " + finalValue;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
