@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Validation</title>
+    <style>
+        body {
+            /* Changed to a much lighter, more suitable color */
+            background-color: aliceblue;
+            font-family:Arial, Helvetica, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            width: 340px;
+            padding: 35px;
+            background: white;
+            text-align: center;
+            /* Simple black border for a grounded feel */
+            border: 2px solid black;
+            border-radius: 12px;
+            
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 22px;
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            font-size: 15px;
+            border: 1.5px solid darkgrey;
+            border-radius: 6px;
+            outline: none;
+            background-color: ghostwhite;
+        }
+
+        /* Focus state makes it feel responsive */
+        input:focus {
+            border-color: black;
+            background-color: white;
+        }
+
+        button {
+            width: 98%;
+            padding: 12px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        #msg {
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Password Validator</h2>
+        
+        <div class="form-group">
+            <input type="text" id="username" placeholder="Username">
+        </div>
+        
+        <div class="form-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        
+        <button onclick="validate()">Validate Password</button>
+
+        <p id="msg"></p>
+    </div>
+
+    <script>
+        function validate() {
+            let user = document.getElementById("username").value.trim();
+            let pass = document.getElementById("password").value;
+            let msg = document.getElementById("msg");
+
+            msg.innerHTML = "";
+
+            if (user === "") {
+                msg.innerHTML = "Username is required";
+                msg.style.color = "red";
+                return;
+            }
+
+            if (pass.length < 8) {
+                msg.innerHTML = "Password must be 8+ characters";
+                msg.style.color = "red";
+                return;
+            }
+
+            let has_upper = false, has_lower = false, has_number = false, has_special = false;
+
+            for (let i = 0; i < pass.length; i++) {
+                let ch = pass[i];
+                if (ch >= 'A' && ch <= 'Z') has_upper = true;
+                else if (ch >= 'a' && ch <= 'z') has_lower = true;
+                else if (ch >= '0' && ch <= '9') has_number = true;
+                else has_special = true;
+            }
+
+            if (has_upper && has_lower && has_number && has_special) {
+                msg.innerHTML = "Account details are valid!";
+                msg.style.color = "green";
+            } else {
+                msg.innerHTML = "Invalid details, Please try again!";
+                msg.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>
