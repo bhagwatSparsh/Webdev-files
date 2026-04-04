@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Math Quiz</title>
+  <style>
+    *{box-sizing:border-box;
+        margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Arial,sans-serif;
+      background:#475b89;
+      color:#111 827;
+      line-height:1.6;
+    }
+    a{text-decoration:none;
+        }
+
+    .wrap{
+      width:92%;
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px 0;
+    }
+    .card{
+      background:#daa3ab;
+      border-radius:12px;
+      box-shadow:0 6px 16px rgba(15,23,42,.15);
+      padding:20px 22px;
+      margin-bottom:24px;
+      border: 5px solid goldenrod;
+    }
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+      align-items:flex-start;
+    }
+
+    .hdr{
+      font-size:1.6rem;
+      margin-bottom:10px;
+      color:#111827;
+      text-decoration:underline;
+      text-decoration-color:#3b82f6;
+      text-underline-offset:6px;
+      
+    }
+    .sub{
+      margin-bottom:14px;
+      color:rgb(61, 60, 60);
+      font-weight:500;
+    }
+    .tagline {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 750px;
+  border: 3px solid black;
+  background: #e0ebff;
+  color: #1d4ed8;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 6px;
+  animation: blinkText 2.6s linear infinite;
+}
+
+@keyframes blinkText {
+  50% {
+    color: transparent; 
+  }
+}
+    nav{
+      background:#111827;
+      color:#f9fafb;
+      position:sticky;
+      
+      box-shadow:0 6px 16px rgba(0,0,0,.35);
+      
+    }
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:10px 4%;
+      display:flex;
+      flex-direction:column;         
+      align-items:center;
+      gap:6px;
+      
+    }
+    .logo{
+      font-weight:bold;
+      font-size:3rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .links{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:center;
+    }
+    .links a{
+      padding:4px 2px;
+      color:#e5e7eb;
+      font-weight:500;
+      font-size:.98rem;
+      position:relative;
+      transition:color .2s,transform .15s;
+    }
+    .links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-3px;
+      width:0;
+      height:2px;
+      background:#facc15;
+      border-radius:999px;
+      
+    }
+    .links a:hover{
+      color:#facc15;
+      transform:translateY(-1px);
+    }
+    .links a:hover::after{width:100%}
+
+    .btn{
+      background:#111827;
+      color:#f9fafb;
+      border:none;
+      padding:9px 18px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:.92rem;
+      font-weight:600;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      box-shadow:0 6px 14px rgba(15,23,42,.4);
+      transition:background .2s,transform .15s,box-shadow .2s;
+    }
+    .btn:hover{
+      background:#1f2937;
+      
+      
+    }
+    .btn:active{
+      transform:translateY(1px);
+      box-shadow:0 4px 10px rgba(15,23,42,.4);
+    }
+    .btn-alt{
+      background:#f59e0b;
+      color:#111827;
+      font-weight:700;
+    }
+    .btn-alt:hover{
+      background:#fbbf24}
+
+    .img-box{
+      float:right;
+      width:275px;
+      max-width:100%;
+      border-radius:12px;
+      border:3px solid #cbd5f5;
+      margin-left:20px;
+      box-shadow:0 12px 24px rgba(55,65,81,.5);
+      
+    }
+    
+
+    .grp{
+      flex:1 1 220px;
+      display:flex;
+      flex-direction:column;
+    }
+    label{
+      font-size:1rem;
+      margin-bottom:4px;
+      color:#111827;
+      font-weight:bold;
+    }
+    input{
+      padding:8px 11px;
+      border-radius:750px;
+      border:3px solid blueviolet;
+      background:#f9fafb;
+      font-size:.92rem;
+      transition:border-color .25s,background .25s,box-shadow .2s;
+    }
+    input:focus{
+      outline:none;
+      border-color:#2563eb;
+      background:#eef2ff;
+      box-shadow:0 0 0 2px rgba(37,99,235,.25);
+    }
+    .err{
+      font-size:.8rem;
+      color:#b91c1c;
+      margin-top:4px;
+      min-height:16px;
+    }
+
+    #quiz-sec,#res-sec{
+      display:none;
+      margin-top:10px
+    }
+    #quiz-sec .card{
+      background:#daa3ab;
+    }
+
+    .q-card{
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:12px 14px;
+      background:#fff;
+      margin-bottom:12px;
+      box-shadow:0 3px 8px rgba(15,23,42,.08);
+      
+    }
+    
+    .q-hdr{
+      font-weight:bold;
+      margin-bottom:6px;
+      color:#111827
+    }
+    .opts{
+      display:flex;
+      flex-direction:column;
+      gap:4px
+    }
+    .opts label{
+      font-weight:normal;
+      color:#111827;
+      cursor:pointer;
+      padding:3px 6px;
+      border-radius:6px;
+      transition:background .15s,color .15s;
+    }
+    
+    .opts input[type=radio]{margin-right:6px}
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      background:#fff;
+      border-radius:10px;
+      overflow:hidden;
+      
+    }
+    th,td{
+      padding:10px;
+      text-align:left;
+      border-bottom:1px solid #e5e7eb;
+      padding: 20px;
+    }
+    th{
+      background:#111827;
+      color:#f9fafb;
+      font-weight:600;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      font-size:.78rem;
+      padding: 20px;
+    }
+    tr:nth-child(even){background:#eef2ff}
+
+    .badge{
+      padding:4px 10px;
+      border-radius:999px;
+      font-weight:bold;
+      display:inline-block;
+      font-size:.85rem;
+    }
+    .pass{
+      background:#bbf7d0;
+      color:#14532d
+    }
+    .avg{
+      background:#fef3c7;
+      color:#92400e
+    }
+    .fail{background:#fee2e2;
+      color:#991b1b;
+      padding:15px;
+    }
+    .sum{margin-top:14px;font-weight:bold;color:#111827}
+
+    @keyframes fade{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .fade-in{animation:fade .45s ease-out forwards}
+
+    
+    footer{
+      background:#0b1120;
+      color:#e5e7eb;
+      padding:20px 4% 16px;
+      margin-top:30px;
+      border-top:1px solid #111827;
+      text-align:center;
+    }
+    .footer-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      font-size:.88rem;
+    }
+    .f-links{
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .f-links a{
+      color:#a5b4fc;
+      font-size:.9rem;
+      position:relative;
+      padding:3px 0;
+      transition:color .2s;
+    }
+    .f-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-3px;
+      width:0;
+      height:1px;
+      background:#facc15;
+      
+    }
+    .f-links a:hover{color:#facc15}
+    .f-links a:hover::after{width:100%}
+    .footer-main{line-height:1.4}
+
+    @media(max-width:768px){
+      .img-box{float:none;display:block;margin:10px auto 0}
+      .card{padding:18px 16px}
+      .hdr{font-size:1.4rem}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">Math Quiz</div>
+      <div class="links">
+        <a href="#home" style="font-family:'Times New Roman'">Home</a>
+        <a href="#reg" style="font-family:'Times New Roman'">Start Quiz</a>
+        <a href="#res-sec" style="font-family:'Times New Roman'">Results</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home">
+    <div class="wrap">
+      <div class="card fade-in">
+        <div class="row">
+          <div style="flex:1 1 280px;">
+            <div class="tagline" style="font-family:'Times New Roman'; font-weight:bold;">Interactive reasoning practice</div>
+            <h1 class="hdr" style="font-weight:bold; font-size:30px;margin:20px 0;">Online Mathematics Quiz</h1>
+            <p class="sub">
+              Test your numerical reasoning skills with patterns, combinatorics and advanced fractions.
+              Register below and attempt 10 curated questions. Try to attempt all the questions to get the best score!
+            </p>
+            <button class="btn btn-alt" onclick="document.getElementById('reg').scrollIntoView();">Register &amp; Start</button>
+          </div>
+          <div>
+            <img class="img-box" src="pngtree-a-mathematic-chalkboard-image_17122601.jpg" alt="Quiz">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reg">
+    <div class="wrap">
+      <div class="card fade-in">
+        <h2 class="hdr" style="font-weight:bold; font-size:30px;">Registration</h2>
+        <p class="sub">Fill in your details to begin. All fields are required.</p>
+        <div class="row">
+          <div class="grp">
+            <label STYLE="font-family:'Times New Roman'; font-weight:bold; font-size:20px">Student Name</label>
+            <input type="text" id="s-name" placeholder="Enter your name">
+            <div class="err" id="e-name"></div>
+          </div>
+          <div class="grp">
+            <label STYLE="font-family:'Times New Roman'; font-weight:bold; font-size:20px">Registration Number</label>
+            <input type="text" id="s-reg" placeholder="Enter your registration number">
+            <div class="err" id="e-reg"></div>
+          </div>
+          <div class="grp">
+            <label STYLE="font-family:'Times New Roman'; font-weight:bold; font-size:20px">Email</label>
+            <input type="email" id="s-mail" placeholder="you@vit.ac.in">
+            <div class="err" id="e-mail"></div>
+          </div>
+        </div>
+        <button class="btn" style="margin-top:16px;" onclick="start()">Start Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz-sec">
+    <div class="wrap">
+      <div class="card fade-in">
+        <h2 class="hdr" style="font-weight:bold; font-size:30px;">Questions</h2>
+        <p class="sub">Choose one option for each question and click Submit.</p>
+        <div id="q-box"></div>
+        <div style="text-align:right;margin-top:18px;">
+          <button class="btn btn-alt" onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="res-sec">
+    <div class="wrap">
+      <div class="card fade-in">
+        <h2 class="hdr" style="font-weight:bold; font-size:30px;">Results</h2>
+        <table>
+          <thead>
+          <tr>
+            <th style="font-family:'Times New Roman'; font-weight:bold; font-size:20px;">Name</th>
+            <th style="font-family:'Times New Roman'; font-weight:bold; font-size:20px;">Registration No</th>
+            <th style="font-family:'Times New Roman'; font-weight:bold; font-size:20px;">Score</th>
+            <th style="font-family:'Times New Roman'; font-weight:bold; font-size:20px;">Performance</th>
+          </tr>
+          </thead>
+          <tbody id="res-body"></tbody>
+        </table>
+        <div class="sum" id="res-sum"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="f-links">
+        <a href="#home">Home</a>
+        <a href="#reg">Register</a>
+        <a href="#quiz-sec">Go to Quiz</a>
+        <a href="#res-sec">View Results</a>
+      </div>
+      <div class="footer-main">
+        &copy; 2026 Math Quiz &mdash; Mini Project: <strong>Logical Reasoning Math Questions</strong> — Made with &hearts;
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let name="";
+    let reg="";
+    let mail="";
+
+    let questions=[
+      "1. Number Series: 2, 6, 18, 54, ?",
+      "2. In resolving 2/((x-1)(x+1)) into partial fractions A/(x-1) + B/(x+1), value of A?",
+      "3. If sin²θ = z in 1 - sin²θ = cos²θ, what is cos²θ?",
+      "4. Evaluate 5C2 + 5C3.",
+      "5. Pattern: 1, 4, 9, 16, 25, ?",
+      "6. Missing Number: 7, 10, 16, 25, ?",
+      "7. Half of a number + 5 = 15. Number?",
+      "8. Man is twice son's age. Son = 10. Man?",
+      "9. Average of three consecutive even numbers is 18. Smallest?",
+      "10. Clock at 3:15 angle?"
+    ];
+
+    let options=[
+      ["72","108","162","216"],
+      ["1","2","-1","0"],
+      ["1 - z","z - 1","z","1 + z"],
+      ["10","15","20","25"],
+      ["30","32","36","40"],
+      ["35","37","41","43"],
+      ["10","15","20","25"],
+      ["15","20","25","30"],
+      ["14","16","18","20"],
+      ["37.5°","45°","52.5°","60°"]
+    ];
+
+    let answers=[2,0,0,2,2,0,2,1,1,2];
+
+    function start(){
+      name=document.getElementById("s-name").value;
+      reg=document.getElementById("s-reg").value;
+      mail=document.getElementById("s-mail").value;
+
+      document.getElementById("e-name").innerHTML="";
+      document.getElementById("e-reg").innerHTML="";
+      document.getElementById("e-mail").innerHTML="";
+
+      let ok=true;
+
+      if(name==""){
+        document.getElementById("e-name").innerHTML="Required";
+        ok=false;
+      }
+
+      if(reg==""){
+        document.getElementById("e-reg").innerHTML="Required";
+        ok=false;
+      }
+
+      if(mail=="" || mail.indexOf("@")==-1){
+        document.getElementById("e-mail").innerHTML="Enter valid email";
+        ok=false;
+      }
+
+      if(ok){
+        let html="";
+        for(let i=0;i<questions.length;i++){
+          html+='<div class="q-card">';
+          html+='<div class="q-hdr">'+questions[i]+'</div>';
+          html+='<div class="opts">';
+
+          for(let j=0;j<options[i].length;j++){
+            html+='<label>';
+            html+='<input type="radio" name="q'+i+'" value="'+j+'"> ';
+            html+=options[i][j];
+            html+='</label>';
+          }
+
+          html+='</div>';
+          html+='</div>';
+        }
+
+        document.getElementById("q-box").innerHTML=html;
+        document.getElementById("quiz-sec").style.display="block";
+        document.getElementById("quiz-sec").scrollIntoView();
+      }
+    }
+
+    function submitQuiz(){
+      let score=0;
+
+      for(let i=0;i<questions.length;i++){
+        let sel=document.querySelector('input[name="q'+i+'"]:checked');
+
+        if(sel){
+          if(parseInt(sel.value)==answers[i]){
+            score++;
+          }
+        }
+      }
+
+      let text="Needs Improvement";
+      let cls="fail";
+
+      if(score>=8){
+        text="Excellent";
+        cls="pass";
+      }
+      else if(score>=5){
+        text="Good";
+        cls="avg";
+      }
+
+      let row=
+      '<tr>'+
+      '<td>'+name+'</td>'+
+      '<td>'+reg+'</td>'+
+      '<td>'+score+' / 10</td>'+
+      '<td><span class="badge '+cls+'">'+text+'</span></td>'+
+      '</tr>';
+
+      document.getElementById("res-body").innerHTML=row;
+      document.getElementById("res-sum").innerHTML="Final Score: "+score+" / 10";
+
+      document.getElementById("res-sec").style.display="block";
+      document.getElementById("res-sec").scrollIntoView();
+    }
+  </script>
+</body>
+</html>
