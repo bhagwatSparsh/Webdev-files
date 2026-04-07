@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Changer</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: Arial;
+            transition: background 0.5s;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Color Changer 🎨</h1>
+    <button onclick="changeColor()">Change Color</button>
+
+    <script>
+        function changeColor() {
+            let r=Math.floor(Math.random()*256);
+            let g=Math.floor(Math.random()*256);
+            let b=Math.floor(Math.random()*256);
+
+            document.body.style.backgroundColor=`rgb(${r}, ${g}, ${b})`;
+        }
+    </script>
+
+</body>
+</html>
